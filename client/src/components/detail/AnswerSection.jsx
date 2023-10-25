@@ -2,9 +2,9 @@ import { styled } from 'styled-components';
 import ProfileCard from './ProfileCard.jsx';
 import propTypes from 'prop-types';
 import Viewer from '../Viewer.jsx';
-import { LoginContext } from '../../App.js';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import Editor from '../Editor.jsx';
+import { useSelector } from 'react-redux';
 
 const AnswerSection = ({
   answer,
@@ -14,7 +14,7 @@ const AnswerSection = ({
 }) => {
   const { createDate, content, writerNickName, writerImageId } = answer;
 
-  const { userData } = useContext(LoginContext);
+  const userData = useSelector((state) => state.user.userData);
   const loggedUserNickname = userData?.nickName;
 
   const [isEditing, setIsEditing] = useState(false);

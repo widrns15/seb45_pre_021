@@ -1,14 +1,13 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { styled } from 'styled-components';
 import icon from '../../imgs/google_icon.svg';
 import logo from '../../imgs/footer_logo.png';
-import { LoginContext } from '../../App';
+import useUserData from '../../hooks/useUserData';
 import { useNavigate } from 'react-router-dom';
-
 import axios from '../../utils/axios';
 
 const Login = () => {
-  const { isLoggedIn, fetchUserData } = useContext(LoginContext);
+  const { isLoggedIn, fetchUserData } = useUserData();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

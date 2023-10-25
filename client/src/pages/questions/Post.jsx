@@ -1,16 +1,17 @@
 import { styled } from 'styled-components';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import NoticeSection from '../../components/post/NoticeSection.jsx';
 import TitleSection from '../../components/post/TitleSection.jsx';
 import DetailSection from '../../components/post/DetailSection.jsx';
 import Button from '../../components/Button.jsx';
 import kanaImg from '../../imgs/post_kana.png';
 import { useNavigate } from 'react-router-dom';
-import { LoginContext } from '../../App.js';
+import { useSelector } from 'react-redux';
 import axios from '../../utils/axios.js';
 
 const Post = () => {
-  const { isLoggedIn } = useContext(LoginContext);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
   const navigate = useNavigate();
 
   useEffect(() => {

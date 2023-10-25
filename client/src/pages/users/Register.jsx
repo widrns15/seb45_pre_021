@@ -1,16 +1,13 @@
 import { styled } from 'styled-components';
 import icon from '../../imgs/google_icon.svg';
 import { Icon } from '@iconify/react';
-
-import { useState, useContext } from 'react';
-
+import { useState } from 'react';
 import SignupDropdown from '../../components/SignupDropdown.jsx';
 import myAxios from '../../utils/axios';
 import { useNavigate } from 'react-router-dom';
 import captcha from '../../imgs/captcha.jpg';
 import clikedCaptcha from '../../imgs/clicked_captcha.gif';
-
-import { LoginContext } from '../../App';
+import { useSelector } from 'react-redux';
 
 const Register = () => {
   const [isShow, setIsShow] = useState(false);
@@ -18,8 +15,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
-
-  const { isLoggedIn } = useContext(LoginContext);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const nav = useNavigate();
 
   if (isLoggedIn) {

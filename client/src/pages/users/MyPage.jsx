@@ -1,15 +1,15 @@
 import { styled } from 'styled-components';
 import Sidebar from '../../components/Sidebar.jsx';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { ProfileBox } from '../../components/myPage/ProfileBox.jsx';
 import { ActivityBox } from '../../components/myPage/ActivityBox.jsx';
 import { SettingBox } from '../../components/myPage/SettingBox.jsx';
 import SavesBox from '../../components/myPage/SavesBox.jsx';
-import { LoginContext } from '../../App';
+import { useSelector } from 'react-redux';
 import profiles from '../../utils/profiles.js';
 
 const MyPage = () => {
-  const { userData } = useContext(LoginContext);
+  const userData = useSelector((state) => state.user.userData);
   const [tab, setTab] = useState(0);
 
   const boxCompoenents = [

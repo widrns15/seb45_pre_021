@@ -1,12 +1,14 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { styled } from 'styled-components';
-import { LoginContext } from '../../App';
 import profiles from '../../utils/profiles.js';
+import useUserData from '../../hooks/useUserData.js';
+import useProfileChange from '../../hooks/useProfileChange.js';
 
 export const SettingBox = () => {
   const [isChecked, setIsChecked] = useState(false);
-  const { handleProfileChange, userData } = useContext(LoginContext);
   const [openSelector, setOpenSelector] = useState(false);
+  const { userData, fetchUserData } = useUserData();
+  const handleProfileChange = useProfileChange(fetchUserData);
 
   const handlePictureChange = () => {
     setOpenSelector(true);
