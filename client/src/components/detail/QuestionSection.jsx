@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import Viewer from '../Viewer.jsx';
 import ProfileCard from './ProfileCard.jsx';
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
-import { LoginContext } from '../../App.js';
+import { useSelector } from 'react-redux';
 
 const QuestionSection = ({ question }) => {
   const { content, writerNickName, writerImageId, createdAt, questionId } =
     question;
-  const { userData } = useContext(LoginContext);
+  const userData = useSelector((state) => state.user.userData);
   return (
     <QuestionContainer>
       <Viewer content={content} />

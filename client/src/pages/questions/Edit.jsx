@@ -1,15 +1,16 @@
 import { styled } from 'styled-components';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Sidebar from '../../components/Sidebar.jsx';
 import Editor from '../../components/Editor.jsx';
 import Viewer from '../../components/Viewer.jsx';
 import Button from '../../components/Button.jsx';
 import { useNavigate, useParams } from 'react-router-dom';
-import { LoginContext } from '../../App.js';
+import { useSelector } from 'react-redux';
 import axios from '../../utils/axios.js';
 
 const Edit = () => {
-  const { isLoggedIn, userData } = useContext(LoginContext);
+  const userData = useSelector((state) => state.user.userData);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const navigate = useNavigate();
 
   const [title, setTitle] = useState('Hello');

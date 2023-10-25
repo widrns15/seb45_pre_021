@@ -3,14 +3,31 @@ import { useNavigate, Link } from 'react-router-dom';
 import logo from '../imgs/logo-stackoverflow.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { useContext, useState } from 'react';
-import { LoginContext } from '../App';
+import { useState, useEffect } from 'react';
 import profiles from '../utils/profiles.js';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../redux/actions/userActions';
+import useUserData from '../hooks/useUserData';
 
 const Nav = () => {
   const navigate = useNavigate();
-  const { handleLogout, userData, isLoggedIn } = useContext(LoginContext);
   const [keyword, setKeyword] = useState('');
+  const userData = useSelector((state) => state.user.userData);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const dispatch = useDispatch();
+
+  const { fetchUserData } = useUserData();
+
+  const handleLogout = () => {
+    // 로그아웃 시, 토큰 삭제
+    localStorage.removeItem('access_token');
+    dispatch(logout());
+  };
+
+  useEffect(() => {
+    // 새로고침 시, Nav에 userData 노출
+    fetchUserData();
+  }, []);
 
   return (
     <NavigationSection>
