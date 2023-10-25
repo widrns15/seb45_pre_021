@@ -1,4 +1,3 @@
-import { useState, createContext, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import MyPage from './pages/users/MyPage.jsx';
@@ -12,67 +11,13 @@ import Search from './pages/questions/Search.jsx';
 import NotFound from './pages/NotFound.jsx';
 import Nav from './components/Nav.jsx';
 import Footer from './components/Footer.jsx';
-import axios from './utils/axios.js';
-
 import './App.css';
 
-export const LoginContext = createContext();
-
+import { Provider } from 'react-redux';
+import store from './redux/store';
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState(null);
-
-  const fetchUserData = async () => {
-    try {
-      const response = await axios.get('users/mypage');
-      setUserData(response.data);
-      setIsLoggedIn(true);
-    } catch (error) {
-      handleLogout();
-      console.log('err', error);
-    }
-  };
-
-  const handleProfileChange = async (index) => {
-    if (userData === null) return;
-    try {
-      await axios.patch('users/mypage/edit-info', {
-        imageId: index,
-      });
-      await fetchUserData();
-    } catch (error) {
-      console.log('err', error);
-    }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('access_token');
-    setIsLoggedIn(false);
-    setUserData(null);
-  };
-
-  useEffect(() => {
-    const storedToken = localStorage.getItem('access_token');
-
-    if (!storedToken) {
-      handleLogout();
-    }
-
-    fetchUserData();
-  }, []);
-
   return (
-    <LoginContext.Provider
-      value={{
-        isLoggedIn,
-        setIsLoggedIn,
-        userData,
-        setUserData,
-        handleLogout,
-        handleProfileChange,
-        fetchUserData,
-      }}
-    >
+    <Provider store={store}>
       <BrowserRouter>
         <Nav />
         <Routes>
@@ -89,7 +34,7 @@ function App() {
         </Routes>
         <Footer />
       </BrowserRouter>
-    </LoginContext.Provider>
+    </Provider>
   );
 }
 
